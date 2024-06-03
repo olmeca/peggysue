@@ -7,13 +7,13 @@ import java.util.List;
 public class Match {
     protected final int start, length;
     private final char[] value;
-    private final boolean captured;
+    private final String captureKey;
 
     public Match(final char[] source, Matcher matcher, int start, int length) {
         this.start = start;
         this.length = length;
         this.value = Arrays.copyOfRange(source, start, start + length);
-        this.captured = matcher.isCaptured();
+        this.captureKey = matcher.getCaptureKey().orElse(null);
     }
 
     public String getValueString() {
@@ -36,6 +36,6 @@ public class Match {
     }
 
     public boolean isCaptured() {
-        return captured;
+        return captureKey != null;
     }
 }

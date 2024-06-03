@@ -6,6 +6,7 @@ public class CharRange extends OneChar{
     private final char to;
 
     public CharRange(char from, char to) {
+        if ( from >= to) throw new IllegalArgumentException("Invalid character range: from >= to");
         this.from = from;
         this.to = to;
     }

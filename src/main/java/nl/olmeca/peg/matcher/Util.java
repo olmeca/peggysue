@@ -16,6 +16,10 @@ public class Util {
         return matchList(source, 0, source.length, itemMatcher, sepMatcher);
     }
 
+    public static List<Match> matchList(char[] source, Matcher itemMatcher) throws NoMatchException {
+        return matchList(source, 0, source.length, itemMatcher, null);
+    }
+
     public static List<Match> matchList(char[] source, int startIndex, int endIndex,
                                        Matcher itemMatcher, Matcher sepMatcher) throws NoMatchException {
         List<Match> matches = new ArrayList<>();

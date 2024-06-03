@@ -2,6 +2,7 @@ package nl.olmeca.peg.matcher;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OneCharChoice extends AbstractChoice<OneChar> {
     protected boolean negate = false;
@@ -15,24 +16,31 @@ public class OneCharChoice extends AbstractChoice<OneChar> {
         return new OneCharChoice(Arrays.asList(choices), false);
     }
 
+    public static OneCharChoice of(Character... choices) {
+        return new OneCharChoice(
+                Arrays.stream(choices)
+                        .map(GivenChar::new)
+                        .collect(Collectors.toUnmodifiableList()
+                ), false
+        );
+    }
+
     public static OneCharChoice noneOf(OneChar... choices) {
         return new OneCharChoice(Arrays.asList(choices), true);
     }
 
     @Override
     public Match doMatch(char[] source, int startIndex, int endIndex) throws NoMatchException {
-        Match result = null;
         try {
-            result = super.doMatch(source, startIndex, endIndex);
+            Match match = super.doMatch(source, startIndex, endIndex);
+            if (!negate) return match;
         } catch (NoMatchException e) {
             if (negate) {
                 return new Match(source, this, startIndex, 1);
-            }
+            } else throw e;
         }
-        if (negate) {
-            throw new NoMatchException(startIndex);
-        }
-        return result;
+        // The try has succeeded
+        throw new NoMatchException(startIndex);
     }
 
     @Override

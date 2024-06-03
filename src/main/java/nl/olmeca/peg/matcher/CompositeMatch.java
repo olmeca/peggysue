@@ -21,8 +21,7 @@ public class CompositeMatch extends Match {
 
     @Override
     protected void addToCaptures(List<Match> captures) {
-        if (isCaptured())
-            captures.add(this);
+        super.addToCaptures(captures);
 
         for (Match match : matches)
             match.addToCaptures(captures);

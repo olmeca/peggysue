@@ -93,8 +93,8 @@ public class SequenceTest {
 
     @Test
     public void testCaptures() throws NoMatchException {
-        Matcher ooma = Make.oneOrMoreGivenChar('a').capture();
-        Matcher oomb = Make.oneOrMoreGivenChar('b').capture();
+        Matcher ooma = Make.oneOrMoreGivenChar('a').capture("ooma");
+        Matcher oomb = Make.oneOrMoreGivenChar('b').capture("oomb");
         Matcher seqab = Sequence.of(ooma, oomb);
         Match match = seqab.match("aabbbc");
         assertEquals(0, match.start);
@@ -143,7 +143,7 @@ public class SequenceTest {
 
     @Test
     public void testNotFollowedByGivenCharNoMatch() throws NoMatchException {
-        Matcher fb = new NotFollowedBy(new GivenChar('z'));
+        Matcher fb = new NotAt(new GivenChar('z'));
         Matcher matcher = Sequence.of(new GivenChar('a'), fb);
         NoMatchException ex = assertThrowsExactly(NoMatchException.class,
                 () -> matcher.match("az"));

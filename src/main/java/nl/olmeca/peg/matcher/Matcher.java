@@ -1,19 +1,22 @@
 package nl.olmeca.peg.matcher;
 
-import java.util.List;
+import java.util.Optional;
 
 public abstract class Matcher {
     public final int NO_MATCH = -1;
     protected final int MAX_MATCH = 999999;
     
     private int patternStart, patternEnd;
-    private boolean captured;
+    private String captureKey;
 
     public abstract Match doMatch(char[] source, int startIndex, int endIndex) throws NoMatchException;
 
     public Match match(String source) throws NoMatchException {
-        char[] charArray = source.toCharArray();
-        return match(charArray, 0, charArray.length);
+        return match(source.toCharArray());
+    }
+
+    public Match match(char[] source) throws NoMatchException {
+        return match(source, 0, source.length);
     }
 
     public Match match(char[] source, int startIndex, int endIndex) throws NoMatchException {
@@ -26,18 +29,19 @@ public abstract class Matcher {
         return source.length >= startIndex + minLength();
     }
 
-    public void setCaptured(boolean capture) {
-        this.captured = capture;
-    }
-
-    public Matcher capture() {
-        this.captured = true;
+    public Matcher capture(String name) {
+        this.captureKey = name;
         return this;
     }
 
     public boolean isCaptured() {
-        return captured;
+        return captureKey != null;
     }
+
+    public Optional<String> getCaptureKey() {
+        return Optional.ofNullable(captureKey);
+    }
+
     public abstract String name();
     public abstract int minLength();
 }

@@ -1,13 +1,13 @@
 package nl.olmeca.peg.matcher;
 
-public class Optional extends Series {
+public class Option extends Series {
 
-    public Optional(Matcher matcher) {
+    public Option(Matcher matcher) {
         super(matcher, 0, 1);
     }
 
-    public static Optional of(Matcher matcher) {
-        return new Optional(matcher);
+    public static Option of(Matcher matcher) {
+        return new Option(matcher);
     }
 
     @Override

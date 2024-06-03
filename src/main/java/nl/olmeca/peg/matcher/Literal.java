@@ -8,6 +8,10 @@ public class Literal extends Matcher {
         this.value = value.toCharArray();
     }
 
+    public static Literal of(String value) {
+        return new Literal(value);
+    }
+
     @Override
     public Match doMatch(char[] source, int startIndex, int endIndex) throws NoMatchException {
         for (int i = 0; i < value.length; i++) {

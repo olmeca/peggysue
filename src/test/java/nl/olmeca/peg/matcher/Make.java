@@ -10,12 +10,12 @@ public class Make {
         return new OneOrMore(new AnyChar());
     }
 
-    public static Optional optionalGivenChar(char givenChar) {
-        return new Optional(new GivenChar(givenChar));
+    public static Option optionalGivenChar(char givenChar) {
+        return new Option(new GivenChar(givenChar));
     }
 
-    public static Optional optionalAnyChar() {
-        return new Optional(new AnyChar());
+    public static Option optionalAnyChar() {
+        return new Option(new AnyChar());
     }
 
     public static Series charChoiceSeries(int from, int to, OneChar... oneChars) {
@@ -24,10 +24,10 @@ public class Make {
     }
 
     public static Matcher anyNotFollowedByGivenChar(char givenChar) {
-        return Sequence.of(new NotFollowedBy(new GivenChar(givenChar)), new AnyChar());
+        return Sequence.of(new NotAt(new GivenChar(givenChar)), new AnyChar());
     }
 
     public static Matcher anyNotFollowedBy(Matcher matcher) {
-        return Sequence.of(new NotFollowedBy(matcher), new AnyChar());
+        return Sequence.of(new NotAt(matcher), new AnyChar());
     }
 }

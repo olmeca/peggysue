@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static nl.olmeca.peg.matcher.Peg.charsetChar;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
@@ -11,24 +12,29 @@ public class CharsetTest {
 
     @Test
     public void testNormalChar() throws NoMatchException {
-        DSL.charsetChar.match("a");
+        charsetChar().match("a");
     }
 
     @Test
     public void testEscapedChar() throws NoMatchException {
-        DSL.charsetChar.match("\\b");
+        charsetChar().match("\\b");
     }
 
     @Test
     public void testRightSquaredBracket() {
         NoMatchException ex = assertThrowsExactly(NoMatchException.class,
-                () -> DSL.charsetChar.match("]")
+                () -> charsetChar().match("]")
         );
     }
 
     @Test
+    public void testEscapedChar2() throws NoMatchException {
+        charsetChar().match("\\]");
+    }
+
+    @Test
     void testCharsetWithGivenChar() throws NoMatchException {
-        Match match = DSL.charset.match("[a]");
+        Match match = Peg.charset().match("[a]");
         List<Match> captures = match.getCapturedMatches();
         assertEquals(1, captures.size());
         assertEquals(1, captures.get(0).length);
@@ -37,7 +43,7 @@ public class CharsetTest {
 
     @Test
     void testCharsetWithEscaped() throws NoMatchException {
-        List<Match> captures = DSL.charset.match("[\\a]").getCapturedMatches();
+        List<Match> captures = Peg.charset().match("[\\a]").getCapturedMatches();
         assertEquals(1, captures.size());
         assertEquals(2, captures.get(0).length);
         assertEquals("\\a", captures.get(0).getValueString());
@@ -45,7 +51,8 @@ public class CharsetTest {
 
     @Test
     void testCharsetWithEscapedAndGivenChar() throws NoMatchException {
-        List<Match> captures = DSL.charset.match("[b\\a]").getCapturedMatches();
+        Match match = Peg.charset().match("[b\\a]");
+        List<Match> captures = match.getCapturedMatches();
         assertEquals(1, captures.size());
         assertEquals(3, captures.get(0).length);
         assertEquals("b\\a", captures.get(0).getValueString());

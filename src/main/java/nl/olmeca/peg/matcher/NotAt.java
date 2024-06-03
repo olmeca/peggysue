@@ -1,8 +1,8 @@
 package nl.olmeca.peg.matcher;
 
-public class NotFollowedBy extends MetaMatcher {
+public class NotAt extends MetaMatcher {
 
-    public NotFollowedBy(Matcher matcher) {
+    public NotAt(Matcher matcher) {
         this.matcher = matcher;
     }
 

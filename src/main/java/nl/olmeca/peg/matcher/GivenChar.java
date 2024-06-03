@@ -9,6 +9,12 @@ public class GivenChar extends OneChar {
     }
 
     @Override
+    public GivenChar capture(String key) {
+        super.capture(key);
+        return this;
+    }
+
+    @Override
     public Match doMatch(char[] source, int startIndex, int endIndex) throws NoMatchException {
         if (isValid(source[startIndex])) {
             return new Match(source, this, startIndex, 1);
