@@ -77,6 +77,7 @@ public class Peg {
             literal,
             Option.of(quantifier)
     );
+
     // charsetchar <- "\\" . / [^\]]
     public static Matcher charsetChar() {
         return new Choice(Arrays.asList(

@@ -13,7 +13,7 @@ public class Literal extends Matcher {
     }
 
     @Override
-    public Match doMatch(char[] source, int startIndex, int endIndex) throws NoMatchException {
+    public Match doMatch(char[] source, int startIndex, int endIndex, Rules rules) throws NoMatchException {
         for (int i = 0; i < value.length; i++) {
             if (source[startIndex + i] != value[i]) {
                 throw new NoMatchException(startIndex);

@@ -30,9 +30,9 @@ public class OneCharChoice extends AbstractChoice<OneChar> {
     }
 
     @Override
-    public Match doMatch(char[] source, int startIndex, int endIndex) throws NoMatchException {
+    public Match doMatch(char[] source, int startIndex, int endIndex, Rules rules) throws NoMatchException {
         try {
-            Match match = super.doMatch(source, startIndex, endIndex);
+            Match match = super.doMatch(source, startIndex, endIndex, rules);
             if (!negate) return match;
         } catch (NoMatchException e) {
             if (negate) {

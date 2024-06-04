@@ -7,9 +7,9 @@ public class NotAt extends MetaMatcher {
     }
 
     @Override
-    public Match doMatch(char[] source, int startIndex, int endIndex) throws NoMatchException {
+    public Match doMatch(char[] source, int startIndex, int endIndex, Rules rules) throws NoMatchException {
         try {
-            matcher.match(source, startIndex, endIndex);
+            matcher.match(source, startIndex, endIndex, rules);
         } catch (NoMatchException e) {
             return new Match(source, this, startIndex, 0);
         }

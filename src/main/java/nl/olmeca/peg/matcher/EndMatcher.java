@@ -2,7 +2,7 @@ package nl.olmeca.peg.matcher;
 
 public class EndMatcher extends Matcher {
     @Override
-    public Match doMatch(char[] source, int startIndex, int endIndex) throws NoMatchException {
+    public Match doMatch(char[] source, int startIndex, int endIndex, Rules rules) throws NoMatchException {
         // The precondition has already done validation
         return new Match(source, this, startIndex, 0);
     }

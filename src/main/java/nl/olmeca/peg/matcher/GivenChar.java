@@ -15,7 +15,7 @@ public class GivenChar extends OneChar {
     }
 
     @Override
-    public Match doMatch(char[] source, int startIndex, int endIndex) throws NoMatchException {
+    public Match doMatch(char[] source, int startIndex, int endIndex, Rules rules) throws NoMatchException {
         if (isValid(source[startIndex])) {
             return new Match(source, this, startIndex, 1);
         }

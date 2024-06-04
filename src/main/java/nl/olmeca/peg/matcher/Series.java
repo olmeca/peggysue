@@ -29,12 +29,12 @@ public class Series extends MetaMatcher {
     }
 
     @Override
-    public Match doMatch(char[] source, int startIndex, int endIndex) throws NoMatchException {
+    public Match doMatch(char[] source, int startIndex, int endIndex, Rules rules) throws NoMatchException {
         int matchLength = 0;
         int i = 0;
         List<Match> subMatches = new ArrayList<>();
         while (i < minCount()) {
-            Match match = matcher.match(source, startIndex + matchLength, endIndex);
+            Match match = matcher.match(source, startIndex + matchLength, endIndex, rules);
             subMatches.add(match);
             matchLength += match.length;
             i++;
@@ -42,7 +42,7 @@ public class Series extends MetaMatcher {
         try {
             // Iterate until exception
             while (i < maxCount()) {
-                Match match = matcher.match(source, startIndex + matchLength, endIndex);
+                Match match = matcher.match(source, startIndex + matchLength, endIndex, rules);
                 subMatches.add(match);
                 matchLength += match.length;
                 i++;

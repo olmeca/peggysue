@@ -7,8 +7,8 @@ public class FollowedBy extends MetaMatcher {
     }
 
     @Override
-    public Match doMatch(char[] source, int startIndex, int endIndex) throws NoMatchException {
-        matcher.match(source, startIndex, endIndex);
+    public Match doMatch(char[] source, int startIndex, int endIndex, Rules rules) throws NoMatchException {
+        matcher.match(source, startIndex, endIndex, rules);
         return new Match(source, this, startIndex, 0);
     }
 

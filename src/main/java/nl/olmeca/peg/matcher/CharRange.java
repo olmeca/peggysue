@@ -12,7 +12,7 @@ public class CharRange extends OneChar{
     }
 
     @Override
-    public Match doMatch(char[] source, int startIndex, int endIndex) throws NoMatchException {
+    public Match doMatch(char[] source, int startIndex, int endIndex, Rules rules) throws NoMatchException {
         char value = source[startIndex];
         if (value >= from && value <= to)
             return new Match(source, this, startIndex, 1);

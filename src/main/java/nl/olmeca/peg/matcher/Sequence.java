@@ -15,12 +15,12 @@ public class Sequence extends Composite<Matcher> {
     }
 
     @Override
-    public Match doMatch(char[] source, int startIndex, int endIndex) throws NoMatchException {
+    public Match doMatch(char[] source, int startIndex, int endIndex, Rules rules) throws NoMatchException {
         int matchLen = 0;
         List<Match> subMatches = new ArrayList<>();
         try {
             for (Matcher sub: subs) {
-                Match subMatch = sub.match(source, startIndex+matchLen, endIndex);
+                Match subMatch = sub.match(source, startIndex+matchLen, endIndex, rules);
                 subMatches.add(subMatch);
                 matchLen += subMatch.length;
             }
