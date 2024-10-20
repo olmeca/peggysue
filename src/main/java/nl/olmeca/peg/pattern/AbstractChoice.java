@@ -9,7 +9,6 @@ public abstract class AbstractChoice<T extends Pattern> extends Composite<T> {
                 return pattern.doMatch(source, startIndex, endIndex, grammar);
             } catch (NoMatchException ignored) {}
         }
-        log("No choice match found");
         throw new NoMatchException(startIndex);
     }
 }

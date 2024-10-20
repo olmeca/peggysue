@@ -1,8 +1,8 @@
 package nl.olmeca.peg.pattern;
 
-public class FollowedBy extends MetaPattern {
+public class And extends MetaPattern {
 
-    public FollowedBy(Pattern pattern) {
+    public And(Pattern pattern) {
         this.pattern = pattern;
     }
 
@@ -13,8 +13,8 @@ public class FollowedBy extends MetaPattern {
     }
 
     @Override
-    public String name() {
-        return "Followed By";
+    public Name name() {
+        return Name.AND;
     }
 
     @Override

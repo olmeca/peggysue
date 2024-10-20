@@ -54,8 +54,8 @@ public class OneCharChoice extends AbstractChoice<OneChar> {
     }
 
     @Override
-    public String name() {
-        return "One char choice";
+    public Name name() {
+        return Name.CHOICE;
     }
 
     @Override

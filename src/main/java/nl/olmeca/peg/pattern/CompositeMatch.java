@@ -26,4 +26,12 @@ public class CompositeMatch extends Match {
         for (Match match : matches)
             match.addToCaptures(captures);
     }
+
+    @Override
+    protected void addToCaptures(List<Match> captures, String captureKey) {
+        super.addToCaptures(captures, captureKey);
+
+        for (Match match : matches)
+            match.addToCaptures(captures, captureKey);
+    }
 }

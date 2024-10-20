@@ -13,24 +13,24 @@ public class CharsetTest {
 
     @Test
     public void testNormalChar() throws NoMatchException {
-        charsetChar().match("a");
+        charsetChar.match("a");
     }
 
     @Test
     public void testEscapedChar() throws NoMatchException {
-        charsetChar().match("\\b");
+        charsetChar.match("\\b");
     }
 
     @Test
     public void testRightSquaredBracket() {
         NoMatchException ex = assertThrowsExactly(NoMatchException.class,
-                () -> charsetChar().match("]")
+                () -> charsetChar.match("]")
         );
     }
 
     @Test
     public void testEscapedChar2() throws NoMatchException {
-        charsetChar().match("\\]");
+        charsetChar.match("\\]");
     }
 
     @Test

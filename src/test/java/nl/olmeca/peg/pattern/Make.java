@@ -18,16 +18,7 @@ public class Make {
         return new Option(new AnyChar());
     }
 
-    public static Series charChoiceSeries(int from, int to, OneChar... oneChars) {
-        OneCharChoice occ = OneCharChoice.of(oneChars);
-        return new Series(occ, from, to);
-    }
-
-    public static Pattern anyNotFollowedByGivenChar(char givenChar) {
-        return Sequence.of(new NotFollowedBy(new GivenChar(givenChar)), new AnyChar());
-    }
-
     public static Pattern anyNotFollowedBy(Pattern pattern) {
-        return Sequence.of(new NotFollowedBy(pattern), new AnyChar());
+        return Sequence.of(new Not(pattern), new AnyChar());
     }
 }

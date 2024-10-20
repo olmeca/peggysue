@@ -9,6 +9,12 @@ public class Option extends Series {
     public static Option of(Pattern pattern) {
         return new Option(pattern);
     }
+    public static Option of(String literal) {
+        return of(new Literal(literal));
+    }
+    public static Option of(char value) {
+        return of(new GivenChar(value));
+    }
 
     @Override
     public int minCount() {
@@ -21,8 +27,8 @@ public class Option extends Series {
     }
 
     @Override
-    public String name() {
-        return "Optional";
+    public Pattern.Name name() {
+        return Name.OPTION;
     }
 
     @Override

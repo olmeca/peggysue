@@ -13,15 +13,14 @@ public class RuleRef extends Pattern {
             throws NoMatchException {
         Optional<Rule> optRule = grammar.get(ruleName);
         if (optRule.isEmpty()) {
-            log("Rule " + ruleName + " not found");
             throw new NoMatchException(startIndex);
         }
         return optRule.get().getPattern().doMatch(source, startIndex, endIndex, grammar);
     }
 
     @Override
-    public String name() {
-        return "";
+    public Pattern.Name name() {
+        return Name.RULEREF;
     }
 
     @Override

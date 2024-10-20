@@ -1,5 +1,6 @@
 package nl.olmeca.peg.pattern;
 
+import nl.olmeca.peg.parser.Peg;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public class SequenceTest {
 
     @Test
     public void testSequence1() throws NoMatchException {
-        Sequence sequence = Sequence.of(
+        Pattern sequence = Sequence.of(
                 new GivenChar('a'),
                 new GivenChar('b'),
                 new GivenChar('c')
@@ -24,7 +25,7 @@ public class SequenceTest {
 
     @Test
     public void testSequence2() throws NoMatchException {
-        Sequence sequence = Sequence.of(
+        Pattern sequence = Sequence.of(
                 new GivenChar('a'),
                 new AnyChar(),
                 new GivenChar('c')
@@ -107,14 +108,14 @@ public class SequenceTest {
 
     @Test
     public void testFollowedByGivenCharSuccess() throws NoMatchException {
-        Pattern pattern = new FollowedBy(new GivenChar('z'));
+        Pattern pattern = new And(new GivenChar('z'));
         Match match = pattern.match("z");
         assertEquals(0, match.start);
     }
 
     @Test
     public void testFollowedByGivenCharSuccess2() throws NoMatchException {
-        Pattern fb = new FollowedBy(new GivenChar('z'));
+        Pattern fb = new And(new GivenChar('z'));
         Pattern pattern = Sequence.of(new GivenChar('a'), fb);
         Match match = pattern.match("az");
         // Should match only the 'a'
@@ -124,7 +125,7 @@ public class SequenceTest {
 
     @Test
     public void testFollowedByGivenCharNoMatch() throws NoMatchException {
-        Pattern fb = new FollowedBy(new GivenChar('z'));
+        Pattern fb = new And(new GivenChar('z'));
         Pattern pattern = Sequence.of(new GivenChar('a'), fb);
         NoMatchException ex = assertThrowsExactly(NoMatchException.class,
                 () -> pattern.match("ab"));
@@ -133,7 +134,7 @@ public class SequenceTest {
 
     @Test
     public void testNotFollowedByGivenCharSuccess2() throws NoMatchException {
-        Pattern fb = Make.anyNotFollowedByGivenChar('z');
+        Pattern fb = Peg.anyCharBut('z');
         Pattern pattern = Sequence.of(new GivenChar('a'), fb);
         Match match = pattern.match("abza");
         // Should match only the 'a'
@@ -143,7 +144,7 @@ public class SequenceTest {
 
     @Test
     public void testNotFollowedByGivenCharNoMatch() throws NoMatchException {
-        Pattern fb = new NotFollowedBy(new GivenChar('z'));
+        Pattern fb = new Not(new GivenChar('z'));
         Pattern pattern = Sequence.of(new GivenChar('a'), fb);
         NoMatchException ex = assertThrowsExactly(NoMatchException.class,
                 () -> pattern.match("az"));

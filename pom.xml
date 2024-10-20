@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>nl.olmeca</groupId>
-    <artifactId>peggysue</artifactId>
+    <artifactId>peg4j</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>

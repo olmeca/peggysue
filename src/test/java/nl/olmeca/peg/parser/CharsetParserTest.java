@@ -3,6 +3,7 @@ package nl.olmeca.peg.parser;
 import nl.olmeca.peg.pattern.Match;
 import nl.olmeca.peg.pattern.Pattern;
 import nl.olmeca.peg.pattern.NoMatchException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -14,11 +15,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CharsetParserTest {
 
+    private CharsetParser parser;
+
+    @BeforeEach
+    public void setup() {
+        parser = new CharsetParser();
+    }
 
     @Test
     public void testParseCharset1() throws NoMatchException {
-        Match match = Peg.charset().match("[b\\']");
-        Optional<Pattern> optionalMatcher = CharsetParser.parse(match);
+        String key = "test";
+        Match match = Peg.charset(key).match("[b\\']");
+        Optional<Pattern> optionalMatcher = parser.parseCaptured(match);
         assertTrue(optionalMatcher.isPresent());
         Pattern pattern = optionalMatcher.get();
         match = pattern.match("ba");
@@ -27,7 +35,7 @@ public class CharsetParserTest {
 
     @Test
     public void testParseCharsetWithRange() throws NoMatchException {
-        Optional<Pattern> optionalMatcher = CharsetParser.parse("[zb-d]");
+        Optional<Pattern> optionalMatcher = parser.parse("[zb-d]");
         assertTrue(optionalMatcher.isPresent());
         Pattern pattern = optionalMatcher.get();
         assertEquals(1, pattern.match("za").getLength());
@@ -40,7 +48,7 @@ public class CharsetParserTest {
 
     @Test
     public void testParseEscapedChars() throws NoMatchException {
-        Optional<Pattern> optionalMatcher = CharsetParser.parse("[\\]a]");
+        Optional<Pattern> optionalMatcher = parser.parse("[\\]a]");
         assertTrue(optionalMatcher.isPresent());
         Pattern pattern = optionalMatcher.get();
         assertEquals(1, pattern.match("]p").getLength());
@@ -50,19 +58,20 @@ public class CharsetParserTest {
 
     @Test
     public void testParseEscapedWhiteSpaceChars() throws NoMatchException {
-        Optional<Pattern> optionalMatcher = CharsetParser.parse("[\\na]");
-        assertTrue(optionalMatcher.isPresent());
-        Pattern pattern = optionalMatcher.get();
+        Optional<Pattern> optionalPattern = parser.parse("[\\na]");
+        assertTrue(optionalPattern.isPresent());
+        Pattern pattern = optionalPattern.get();
         char[] source = new char[] { '\n', 'b', 'c', 'd', 'e', 'f' };
         Match match = pattern.match(source);
         assertEquals(1, match.getLength());
+        assertEquals(1, pattern.match(new char[] {'a', 'p'}).getLength());
         assertEquals(1, pattern.match("ap").getLength());
 
     }
 
     @Test
     public void testParseNegatedChar() throws NoMatchException {
-        Optional<Pattern> optionalMatcher = CharsetParser.parse("[^a]");
+        Optional<Pattern> optionalMatcher = parser.parse("[^a]");
         assertTrue(optionalMatcher.isPresent());
         Pattern pattern = optionalMatcher.get();
         assertEquals(1, pattern.match("za").getLength());
@@ -70,7 +79,7 @@ public class CharsetParserTest {
     }
     @Test
     public void testParseNegatedCharRange() throws NoMatchException {
-        Optional<Pattern> optionalMatcher = CharsetParser.parse("[^b-df]");
+        Optional<Pattern> optionalMatcher = parser.parse("[^b-df]");
         assertTrue(optionalMatcher.isPresent());
         Pattern pattern = optionalMatcher.get();
         assertEquals(1, pattern.match("ap").getLength());

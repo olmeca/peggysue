@@ -2,6 +2,7 @@ package nl.olmeca.peg.pattern;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Series extends MetaPattern {
 
@@ -9,11 +10,19 @@ public class Series extends MetaPattern {
 
     private final int minCount;
     private final int maxCount;
+    private final Pattern separator;
 
-    public Series(Pattern pattern, int minCount, int maxCount) {
+    public Series(Pattern pattern, Pattern separator, int minCount, int maxCount) {
+        Objects.requireNonNull(pattern, "Series pattern must not be null");
+        Objects.requireNonNull(separator, "Series separator must not be null");
         this.pattern = pattern;
+        this.separator = separator;
         this.minCount = minCount;
         this.maxCount = maxCount;
+    }
+
+    public Series(Pattern pattern, int minCount, int maxCount) {
+        this(pattern, Any.ANY, minCount, maxCount);
     }
 
     public Series(Pattern pattern, int count) {
@@ -34,6 +43,9 @@ public class Series extends MetaPattern {
         int i = 0;
         List<Match> subMatches = new ArrayList<>();
         while (i < minCount()) {
+            // At first iteration skip matching separator
+            if (i > 0)
+                separator.match(source, startIndex + matchLength, endIndex, grammar);
             Match match = pattern.match(source, startIndex + matchLength, endIndex, grammar);
             subMatches.add(match);
             matchLength += match.length;
@@ -42,6 +54,8 @@ public class Series extends MetaPattern {
         try {
             // Iterate until exception
             while (i < maxCount()) {
+                // First match the separator
+                separator.match(source, startIndex + matchLength, endIndex, grammar);
                 Match match = pattern.match(source, startIndex + matchLength, endIndex, grammar);
                 subMatches.add(match);
                 matchLength += match.length;
@@ -54,8 +68,8 @@ public class Series extends MetaPattern {
     }
 
     @Override
-    public String name() {
-        return "Series";
+    public Name name() {
+        return Name.SERIES;
     }
 
     @Override

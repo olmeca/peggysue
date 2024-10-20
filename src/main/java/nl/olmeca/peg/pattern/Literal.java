@@ -23,8 +23,8 @@ public class Literal extends Pattern {
     }
 
     @Override
-    public String name() {
-        return "";
+    public Name name() {
+        return Name.LITERAL;
     }
 
     @Override

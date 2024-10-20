@@ -10,8 +10,16 @@ public class Sequence extends Composite<Pattern> {
         this.subs = subs;
     }
 
-    public static Sequence of(Pattern... items) {
-        return new Sequence(Arrays.asList(items));
+    public static Pattern of(Pattern... alternatives) {
+        return of(Arrays.asList(alternatives));
+    }
+
+    public static Pattern of(List<Pattern> patterns) {
+        return switch (patterns.size()) {
+            case 0 -> throw new IllegalArgumentException("Empty pattern list");
+            case 1 -> patterns.get(0);
+            default -> new Sequence(patterns);
+        };
     }
 
     @Override
@@ -31,8 +39,8 @@ public class Sequence extends Composite<Pattern> {
     }
 
     @Override
-    public String name() {
-        return "sequence";
+    public Pattern.Name name() {
+        return Name.SEQUENCE;
     }
 
     @Override

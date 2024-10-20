@@ -1,5 +1,7 @@
 package nl.olmeca.peg.pattern;
 
+import nl.olmeca.peg.parser.Peg;
+
 import java.util.Optional;
 
 public abstract class Pattern {
@@ -9,6 +11,9 @@ public abstract class Pattern {
     private int patternStart, patternEnd;
     private String captureKey;
 
+    public enum Name {
+        ANY, GIVEN_CHAR, ANY_CHAR, LITERAL, START, END, CHOICE, SEQUENCE, OPTION, CHAR_RANGE, AND, NOT, SERIES, ZERO_OR_MORE, ONE_OR_MORE, RULEREF
+    }
     public abstract Match doMatch(char[] source, int startIndex, int endIndex, Grammar grammar) throws NoMatchException;
 
     public Match match(String source) throws NoMatchException {
@@ -24,16 +29,15 @@ public abstract class Pattern {
     }
 
     public Match match(char[] source) throws NoMatchException {
-        return match(source, 0, source.length, new Grammar());
+        return match(source, 0, source.length, Peg.grammar);
     }
 
     public Match match(char[] source, int startIndex, int endIndex) throws NoMatchException {
-        return match(source, startIndex, endIndex, new Grammar());
+        return match(source, startIndex, endIndex, Peg.grammar);
     }
 
     public Match match(char[] source, int startIndex, int endIndex, Grammar grammar) throws NoMatchException {
         if (!matchPrecondition(source, startIndex, endIndex)) {
-            log("Precondition failed at index " + startIndex + " and endIndex " + endIndex);
             throw new NoMatchException(startIndex);
         }
         return doMatch(source, startIndex, endIndex, grammar);
@@ -56,9 +60,6 @@ public abstract class Pattern {
         return Optional.ofNullable(captureKey);
     }
 
-    public void log(String message) {
-        System.out.println(getClass().getName() + ": " + message);
-    }
-    public abstract String name();
+    public abstract Name name();
     public abstract int minLength();
 }

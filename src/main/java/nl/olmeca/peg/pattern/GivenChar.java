@@ -27,7 +27,7 @@ public class GivenChar extends OneChar {
     }
 
     @Override
-    public String name() {
-        return "the '" + refChar + "' character";
+    public Name name() {
+        return Name.GIVEN_CHAR;
     }
 }

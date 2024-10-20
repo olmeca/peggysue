@@ -8,8 +8,8 @@ public class AnyChar extends OneChar {
     }
 
     @Override
-    public String name() {
-        return "any character";
+    public Name name() {
+        return Name.ANY_CHAR;
     }
 
 }

@@ -1,8 +1,8 @@
 package nl.olmeca.peg.pattern;
 
-public class NotFollowedBy extends MetaPattern {
+public class Not extends MetaPattern {
 
-    public NotFollowedBy(Pattern pattern) {
+    public Not(Pattern pattern) {
         this.pattern = pattern;
     }
 
@@ -17,8 +17,8 @@ public class NotFollowedBy extends MetaPattern {
     }
 
     @Override
-    public String name() {
-        return "";
+    public Name name() {
+        return Name.NOT;
     }
 
     @Override

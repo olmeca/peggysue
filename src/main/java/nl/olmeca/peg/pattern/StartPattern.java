@@ -13,8 +13,8 @@ public class StartPattern extends Pattern {
     }
 
     @Override
-    public String name() {
-        return "Start Matcher";
+    public Name name() {
+        return Name.START;
     }
 
     @Override

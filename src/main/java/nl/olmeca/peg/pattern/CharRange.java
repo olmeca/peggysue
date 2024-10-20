@@ -20,8 +20,8 @@ public class CharRange extends OneChar{
     }
 
     @Override
-    public String name() {
-        return "Char Range";
+    public Pattern.Name name() {
+        return Name.CHAR_RANGE;
     }
 
 }

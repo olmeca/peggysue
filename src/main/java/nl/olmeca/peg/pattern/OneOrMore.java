@@ -11,7 +11,7 @@ public class OneOrMore extends Series {
     }
 
     @Override
-    public String name() {
-        return "One or more";
+    public Name name() {
+        return Name.ONE_OR_MORE;
     }
 }
